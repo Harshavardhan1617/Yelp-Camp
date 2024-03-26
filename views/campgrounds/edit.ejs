@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit campground</title>
+    <title>New Campground</title>
 </head>
 <body>
-    <h2>edit here</h2>
+    <h2>Edit</h2>
+    <form action="/campgrounds/<%= findCamp._id %>?_method=PUT" method="POST">
+        <div>
+            <input type="text" id="title" name="campground[title]" value="<%= findCamp.title %>">
+            <label for="title">Title</label>
+        </div>
+        <div>
+            <input type="text" id="location" name="campground[location]" value="<%= findCamp.location %>">
+            <label for="location">Location</label>
+        </div>
+        <button>Update campground</button>
+    </form>
+    <a href="/campgrounds">All campgrounds</a>
+
 </body>
 </html>
