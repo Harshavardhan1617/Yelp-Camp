@@ -1,9 +1,10 @@
 const express = require("express");
 const methodOverride = require("method-override");
+const ejsMate = require('ejs-mate'); 
+
 const path = require("path");
 const mongoose = require("mongoose"); 
 const Campground = require("./models/Campgrounds");
-
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp')
 
@@ -15,14 +16,16 @@ db.once("open", () => {
 
 const app = express();
 
-app.use(express.urlencoded({extended: true}))
+app.engine('ejs', ejsMate)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'))
+
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello<h1>");
+  res.render('index');
 });
 
 app.get("/campgrounds", async (req, res) => {
