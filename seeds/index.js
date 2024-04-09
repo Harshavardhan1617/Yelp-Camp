@@ -4,8 +4,7 @@ const cities = require("./cities");
 const mongoose = require("mongoose");
 const Campground = require("../models/Campgrounds");
 
-mongoose.connect("mongodb://172.17.0.2:27017/yelp-camp");
-// mongoose.connect("mongodb://localhost:27017/yelp-camp");
+mongoose.connect("mongodb://localhost:27017/yelp-camp");
 const db = mongoose.connection;
 db.on("error", (err) => logError(err));
 db.once("open", () => {
