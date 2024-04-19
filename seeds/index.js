@@ -30,6 +30,7 @@ const seedDb = async () => {
     await camp.save();
   }
   console.log("saved");
+  mongoose.connection.close();
 };
 
 seedDb();
