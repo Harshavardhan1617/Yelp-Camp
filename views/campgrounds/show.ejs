@@ -1,25 +1,48 @@
 <% layout('layouts/boilerplate') -%>
-
-<div class="card">
-  <img src="<%= showCamp.image %>" class="card-img-top" alt="campgrounds" />
-  <div class="card-body">
-    <h5 class="card-title"><%= showCamp.title %></h5>
-    <p class="card-text"><%= showCamp.description %></p>
+  <div class="gap-2 d-flex flex-direction: row mb-3">
+    <div class="card col-6 mx-3 pt-2">
+      <img src="<%= showCamp.image %>" class="card-img-top" alt="campgrounds" />
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= showCamp.title %>
+        </h5>
+        <p class="card-text">
+          <%= showCamp.description %>
+        </p>
+      </div>
+      <div class="card-body d-flex gap-2">
+        <a href="/campgrounds/<%= showCamp._id %>/edit" class="card-link"><button class="btn btn-info">Edit</button></a>
+        <form action="/campgrounds/<%= showCamp._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-danger mb-3">Delete</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-5">
+      <h2>reviews</h2>
+      <% for (review of showCamp.reviews) { %>
+        <p>rating: <%= review.rating %>
+        </p>
+        <p>comment: <%= review.body %>
+        </p>
+        <% } %>
+    </div>
   </div>
-  <!-- <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul> -->
-  <div class="card-body d-flex gap-2">
-    <a href="/campgrounds/<%= showCamp._id %>/edit" class="card-link"
-      ><button class="btn btn-info">Edit</button></a
-    >
-    <form
-      action="/campgrounds/<%= showCamp._id %>?_method=DELETE"
-      method="POST"
-    >
-      <button class="btn btn-danger mb-3">Delete</button>
+  <section id="review">
+    <form action="/campgrounds/<%= showCamp._id %>/review" method="post" class="mb-3 validated-form" novalidate>
+      <div class="col-6 offset-3">
+        <div class="mb-3">
+          <label for="rating" class="form-label">Rating</label>
+          <input type="range" min="1" max="5" class="form-range" id="rating" name="review[rating]" />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Review</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="review[body]"
+            required></textarea>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </div>
     </form>
-  </div>
-</div>
+  </section>
