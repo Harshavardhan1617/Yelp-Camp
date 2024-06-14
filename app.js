@@ -112,14 +112,28 @@ app.delete(
   })
 );
 
-app.post("/campgrounds/:id/review", validateReview, async (req, res) => {
-  const campground = await Campground.findById(req.params.id);
-  const review = new Review(req.body.review);
-  campground.reviews.push(review);
-  await campground.save();
-  await review.save();
-  res.redirect(`/campgrounds/${req.params.id}`);
-});
+app.post(
+  "/campgrounds/:id/reviews",
+  validateReview,
+  catchAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await campground.save();
+    await review.save();
+    res.redirect(`/campgrounds/${req.params.id}`);
+  })
+);
+
+app.delete(
+  "/campgrounds/:id/reviews/:reviewId",
+  catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`);
+  })
+);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("page not found", 404));
