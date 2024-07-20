@@ -1,4 +1,4 @@
-const isLoggedIn = (req, res, next) => {
+module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.flash("error", "You Must be Signed in first");
     return res.redirect("/login");
