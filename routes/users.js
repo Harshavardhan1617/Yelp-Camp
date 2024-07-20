@@ -5,7 +5,7 @@ const localStrategy = require("passport-local");
 const catchAsync = require("../utils/catchAsync");
 
 router.get("/register", (req, res) => {
-  res.render("campgrounds/register");
+  res.render("users/register");
 });
 
 router.post(
@@ -23,5 +23,11 @@ router.post(
     }
   })
 );
+
+router.get("/login", (req, res) => {
+  res.render("users/login");
+});
+
+router.post("/login", (req, res) => {});
 
 module.exports = router;
