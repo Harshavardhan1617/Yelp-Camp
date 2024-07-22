@@ -3,5 +3,5 @@ module.exports.isLoggedIn = (req, res, next) => {
     req.flash("error", "You Must be Signed in first");
     return res.redirect("/login");
   }
-  res.redirect("/new");
+  next();
 };
