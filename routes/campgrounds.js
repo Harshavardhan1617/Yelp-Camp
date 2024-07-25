@@ -36,8 +36,9 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const showCamp = await Campground.findById(req.params.id)
-      .populate("reviews")
+      .populate({ path: "reviews", populate: { path: "author" } })
       .populate("author");
+
     if (!showCamp) {
       req.flash("error", "Cannot Find the Campground");
       return res.redirect("/campgrounds");
