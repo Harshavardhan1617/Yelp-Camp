@@ -17,6 +17,9 @@
             <li class="list-group-item text-muted">
               <%= showCamp.location%>
             </li>
+            <li class="list-group-item">submitted by :
+              <%= showCamp.author.username%>
+            </li>
             <li class="list-group-item">$<%= showCamp.price%>/night</li>
           </ul>
           <div class="card-body">
