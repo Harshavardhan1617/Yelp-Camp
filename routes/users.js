@@ -5,34 +5,11 @@ const localStrategy = require("passport-local");
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 const { storeReturnTo } = require("../middleware");
+const userController = require("../controllers/users");
 
-router.get("/register", (req, res) => {
-  res.render("users/register");
-});
-
-router.post(
-  "/register",
-  catchAsync(async (req, res, next) => {
-    try {
-      const { email, username, password } = req.body;
-      const user = new User({ email, username });
-      const registeredUser = await User.register(user, password);
-      req.login(registeredUser, (err) => {
-        if (err) return next(err);
-        req.flash("success", "welcome to Yelpcamp");
-        res.redirect("/campgrounds");
-      });
-    } catch (e) {
-      req.flash("error", e.message);
-      res.redirect("register");
-    }
-  })
-);
-
-router.get("/login", (req, res) => {
-  res.render("users/login");
-});
-
+router.get("/register", userController.getRegisterForm);
+router.post("/register", catchAsync(userController.createUser));
+router.get("/login", userController.getLoginForm);
 router.post(
   "/login",
   storeReturnTo,
@@ -40,21 +17,8 @@ router.post(
     failureFlash: true,
     failureRedirect: "/login",
   }),
-  (req, res) => {
-    req.flash("success", "Welcome back");
-    const redirectUrl = res.locals.returnTo || "/campgrounds";
-    res.redirect(redirectUrl);
-  }
+  userController.login
 );
-
-router.get("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    req.flash("success", "Goodbye!");
-    res.redirect("/campgrounds");
-  });
-});
+router.get("/logout", userController.logout);
 
 module.exports = router;
