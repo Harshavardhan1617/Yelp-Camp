@@ -14,10 +14,7 @@
         <input class="form-control" required type="text" id="location" name="campground[location]"
           value="<%= findCamp.location %>" />
       </div>
-      <div class="form-group mb-3">
-        <label for="image">Add images</label>
-        <input type="file" name="image" id="image" multiple>
-      </div>
+
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
@@ -28,6 +25,10 @@
         <label for="description">Location</label>
         <input class="form-control" required type="text" id="description" name="campground[description]"
           value="<%= findCamp.description %>" />
+      </div>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">Upload Images</label>
+        <input class="form-control" type="file" id="formFileMultiple" name="image" id="image" multiple>
       </div>
       <button class="btn btn-primary mb-3">Update campground</button>
     </form>
