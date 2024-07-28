@@ -1,70 +1,35 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="col-6 offset-3">
-  <h2>Edit</h2>
-  <form
-    action="/campgrounds/<%= findCamp._id %>?_method=PUT"
-    method="POST"
-    novalidate
-    class="validated-form"
-  >
-    <div class="form-group mb-3">
-      <label for="title">Title</label>
-      <input
-        class="form-control"
-        required
-        type="text"
-        id="title"
-        name="campground[title]"
-        value="<%= findCamp.title %>"
-      />
-    </div>
-    <div class="form-group mb-3">
-      <label for="location">Location</label>
-      <input
-        class="form-control"
-        required
-        type="text"
-        id="location"
-        name="campground[location]"
-        value="<%= findCamp.location %>"
-      />
-    </div>
-    <div class="form-group mb-3">
-      <label for="image">Image Url</label>
-      <input
-        class="form-control"
-        required
-        type="text"
-        id="image"
-        name="campground[image]"
-        value="<%= findCamp.image %>"
-      />
-    </div>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text">$</span>
+  <div class="col-6 offset-3">
+    <h2>Edit</h2>
+    <form action="/campgrounds/<%= findCamp._id %>?_method=PUT" method="POST" novalidate class="validated-form"
+      enctype="multipart/form-data">
+      <div class="form-group mb-3">
+        <label for="title">Title</label>
+        <input class="form-control" required type="text" id="title" name="campground[title]"
+          value="<%= findCamp.title %>" />
       </div>
-      <input
-        required
-        type="number"
-        class="form-control"
-        name="campground[price]"
-        value="<%= findCamp.price %>"
-      />
-    </div>
-    <div class="form-group mb-3">
-      <label for="description">Location</label>
-      <input
-        class="form-control"
-        required
-        type="text"
-        id="description"
-        name="campground[description]"
-        value="<%= findCamp.description %>"
-      />
-    </div>
-    <button class="btn btn-primary mb-3">Update campground</button>
-  </form>
-  <a href="/campgrounds">All campgrounds</a>
-</div>
+      <div class="form-group mb-3">
+        <label for="location">Location</label>
+        <input class="form-control" required type="text" id="location" name="campground[location]"
+          value="<%= findCamp.location %>" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="image">Add images</label>
+        <input type="file" name="image" id="image" multiple>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input required type="number" class="form-control" name="campground[price]" value="<%= findCamp.price %>" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="description">Location</label>
+        <input class="form-control" required type="text" id="description" name="campground[description]"
+          value="<%= findCamp.description %>" />
+      </div>
+      <button class="btn btn-primary mb-3">Update campground</button>
+    </form>
+    <a href="/campgrounds">All campgrounds</a>
+  </div>
