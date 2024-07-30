@@ -38,6 +38,10 @@ const seedDb = async () => {
       ],
       price: random100,
       author: "669e170fd7902e048c91c481",
+      geometry: {
+        type: "Point",
+        coordinates: [78.04253719747066, 15.830925366093778],
+      },
       description:
         "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto vero deserunt officiis et corporis nobis quo ad, nemo at facilis laudantium alias aut incidunt exercitationem natus, animi cum dolorem? Sed a saepe expedita, molestiae ipsa dolores incidunt neque reiciendis.",
     });
