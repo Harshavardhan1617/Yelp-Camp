@@ -1,24 +1,29 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
+const mongoSanitize = require("express-mongo-sanitize");
 const express = require("express");
 const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const ExpressError = require("./utils/ExpressError");
 const path = require("path");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local");
+const helmet = require("helmet");
+const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
 
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
+const MongoDBStore = require("connect-mongo")(session);
 
-mongoose.connect("mongodb://localhost:27017/yelp-camp");
+const db_url = process.env.DB_URL;
+const local_url = "mongodb://localhost:27017/yelp-camp";
+mongoose.connect(local_url);
+// mongoose.connect(db_url);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -35,8 +40,61 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(mongoSanitize());
+app.use(helmet());
+
+const scriptSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
+  "https://kit.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net",
+  "https://cdn.maptiler.com/",
+];
+const styleSrcUrls = [
+  "https://kit-free.fontawesome.com/",
+  "https://stackpath.bootstrapcdn.com/",
+  "https://fonts.googleapis.com/",
+  "https://use.fontawesome.com/",
+  "https://cdn.jsdelivr.net",
+  "https://cdn.maptiler.com/",
+];
+const connectSrcUrls = ["https://api.maptiler.com/"];
+const fontSrcUrls = [];
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        "https://res.cloudinary.com/db1byxn8j/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+        "https://images.unsplash.com/",
+        "https://api.maptiler.com/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  })
+);
+
+const store = new MongoDBStore({
+  url: local_url,
+  secret: "mysecret",
+  touchAfter: 24 * 60 * 60,
+});
+
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR: ", e);
+});
 
 const sessionConfig = {
+  store,
+  name: "_jksdfh",
   secret: "thisisasecret",
   resave: false,
   saveUninitialized: true,
