@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') -%>
   <link rel="stylesheet" href="/stylesheets/star.css">
 
+  <div id="map"></div>
   <div class="row">
     <div class="col-6">
       <div id="carouselExample" class="carousel slide" data-ride="carousel">
@@ -111,3 +112,9 @@
 
     </div>
   </div>
+
+  <script>
+    const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+    const campground = <%- JSON.stringify(showCamp) %>
+  </script>
+  <script src="/javascripts/showPageMap.js"></script>
