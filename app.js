@@ -18,7 +18,7 @@ const User = require("./models/user");
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
-const MongoDBStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongo");
 
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 mongoose.connect(db_url);
@@ -83,10 +83,12 @@ app.use(
 
 const secret = process.env.SECRET || "mysecret";
 
-const store = new MongoDBStore({
-  url: db_url,
-  secret,
+const store = MongoStore.create({
+  mongoUrl: db_url,
   touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: secret,
+  },
 });
 
 store.on("error", function (e) {
