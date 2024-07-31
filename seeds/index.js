@@ -24,16 +24,16 @@ const seedDb = async () => {
       title: `${sample(descriptors)} ${sample(places)}`,
       images: [
         {
-          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722167802/YelpCamp/kcvbb9wfsgwwo5itokq4.png",
-          filename: "YelpCamp/e4pmesxqk63zigmdvuiq",
+          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722397592/qingbao-meng-01_igFr7hd4-unsplash_1_nbyaxz.jpg",
+          filename: "qingbao-meng-01_igFr7hd4-unsplash_1_nbyaxz",
         },
         {
-          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722167800/YelpCamp/drmddn10qqlszthhmxpq.png",
-          filename: "YelpCamp/stlen1nmpvkmvndeampf",
+          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722397586/bailey-zindel-NRQV-hBF10M-unsplash_1_yy3ie4.jpg",
+          filename: "bailey-zindel-NRQV-hBF10M-unsplash_1_yy3ie4",
         },
         {
-          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722163024/YelpCamp/gsnwyf30ibinqju23bwx.png",
-          filename: "YelpCamp/stlen1nmpvkmvndeampf",
+          url: "https://res.cloudinary.com/db1byxn8j/image/upload/v1722397573/johannes-plenio-RwHv7LgeC7s-unsplash_1_lxco82.jpg",
+          filename: "johannes-plenio-RwHv7LgeC7s-unsplash_1_lxco82",
         },
       ],
       price: random100,
