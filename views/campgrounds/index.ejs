@@ -6,7 +6,11 @@
     <div class="card mb-3">
       <div class="row no-gutters">
         <div class="col-md-4">
-          <img src="<%= campground.images[1].url %>" class="card-img img-fluid" alt="landscape" />
+          <% if (campground.images[0]) {%>
+            <img src="<%= campground.images[0].url %>" class="card-img img-fluid" alt="landscape" />
+            <% } else { %>
+              <img src="https://res.cloudinary.com/db1byxn8j/image/upload/v1722396842/adam-kool-ndN00KmbJ1c-unsplash_1_gqh3on.jpg" class="card-img img-fluid" alt="landscape" />
+              <% } %>
         </div>
         <div class="col-md-8">
           <div class="card-body">
@@ -30,7 +34,10 @@
 
       <script>
         const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
-        const campgrounds = {features: <%- JSON.stringify(campgrounds) %>}
+    //CAUTION: the below ejs format should be exactly the same, dont format on save for this file. vs code automatically add space 
+    //for the ejs tag which breaks the code
+        const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+     //TODO: find a better way to save the JSON document above
       </script>
 
       <script src="/javascripts/clusterMap.js"></script>
