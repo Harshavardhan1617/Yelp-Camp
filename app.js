@@ -20,6 +20,8 @@ const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
 const MongoStore = require("connect-mongo");
 
+const { startKeepAlive, getLogs } = require("./alive");
+
 const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 mongoose.connect(db_url);
 // mongoose.connect(db_url);
@@ -132,6 +134,15 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+app.get("/logs", async (req, res) => {
+  try {
+    const logs = await getLogs();
+    res.send(logs.join("\n"));
+  } catch (error) {
+    res.status(500).send("Error retrieving logs");
+  }
+});
+
 app.all("*", (req, res, next) => {
   next(new ExpressError("page not found", 404));
 });
@@ -144,4 +155,8 @@ app.use((err, req, res, next) => {
 
 app.listen(3000, () => {
   console.log("serving on port 3000!!");
+  const serverUrl = "https://yelp-camp-hnqs.onrender.com/campgrounds/thejob";
+  startKeepAlive(serverUrl).catch((error) => {
+    console.error("Error starting keep-alive process:", error);
+  });
 });

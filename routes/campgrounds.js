@@ -25,6 +25,9 @@ router
 //   res.send("it worked");
 // });
 router.get("/new", isLoggedIn, campgroundsController.newCampground);
+router.get("/thejob", (req, res) => {
+  res.send("hello");
+});
 
 router
   .route("/:id")
